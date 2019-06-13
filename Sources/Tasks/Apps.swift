@@ -1,12 +1,11 @@
 import Foundation
+import PromiseKit
 
 struct Apps {
     private static let queue = DispatchQueue(label: "dotfiles-apps")
 
-//    static func install(_ homeDirectory: URL) -> Promise<Void> {
-//        return Promise<Void> { seal in
-//
-//        }
-//    }
+    static func install() -> Promise<Void> {
+        return Brew.run("doctor")
+    }
 
 }

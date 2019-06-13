@@ -10,12 +10,13 @@ let package = Package(
         .executable(name: "dotfiles", targets: ["Dotfiles"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/console-kit", from: "4.0.0-alpha"),
-        .package(url: "https://github.com/vapor/core", from: "3.0.0")
+        .package(url: "https://github.com/tuist/shell", from: "2.1.2"),
+        .package(url: "https://github.com/mxcl/PromiseKit", from: "7.0.0-alpha"),
+        .package(url: "https://github.com/vapor/console-kit", from: "4.0.0-alpha")
     ],
     targets: [
         .target(name: "Dotfiles",
-                dependencies: ["ConsoleKit", "Core"],
+                dependencies: ["Shell", "ConsoleKit", "PromiseKit"],
                 path: "Sources")
     ]
 )

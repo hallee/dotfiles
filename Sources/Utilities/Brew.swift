@@ -1,10 +1,25 @@
-import Core
+import PromiseKit
+import Shell
 
 struct Brew {
-    /// see https://github.com/vapor/toolbox/tree/master/Sources/Globals
-    @discardableResult
-    static func run(_ input: String) throws -> String {
-        return try Process.execute("brew", input)
+
+    static func run(_ command: String...) -> Promise<Void> {
+        return Promise<Void> { seal in
+            Shell().async(
+                ["/usr/local/bin/brew"] + command,
+                shouldBeTerminatedOnParentExit: false,
+                workingDirectoryPath: nil,
+                env: nil,
+                onStdout: { output in
+                    print(output)
+                }, onStderr: { error in
+                    print(error)
+                }, onCompletion: { result in
+                    seal.fulfill()
+                }
+            )
+        }
+
     }
 
 }
