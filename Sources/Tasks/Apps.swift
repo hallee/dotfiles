@@ -2,10 +2,23 @@ import Foundation
 import PromiseKit
 
 struct Apps {
-    private static let queue = DispatchQueue(label: "dotfiles-apps")
+
+    private static let appsToInstall = [
+        "sublime-text",
+        "github",
+        "discord",
+        "istat-menus",
+        "bartender",
+        "geekbench",
+        "google-chrome",
+        "firefox",
+        "iconjar",
+        "imageoptim",
+        "audio-hijack"
+    ]
 
     static func install() -> Promise<Void> {
-        return Brew.run("doctor")
+        return Brew.cask(appsToInstall)
     }
 
 }

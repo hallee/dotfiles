@@ -6,7 +6,7 @@ struct Fonts {
 
     static func install() -> Promise<Void> {
         return Promise<Void> { seal in
-
+            seal.fulfill()
         }
     }
 
