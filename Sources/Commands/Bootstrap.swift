@@ -9,20 +9,22 @@ final class Bootstrap: Command {
     let signature: Signature = Signature()
 
     let help: String = "Bootstraps my development environment. 👨🏻‍🍳👌"
-     var bootstrapTasks: [Promise<Void>] {
+
+    func bootstrapTasks(_ console: Console) -> [Promise<Void>] {
          return [
-             Apps.install(),
+             Apps.install(console),
              Fonts.install()
          ]
      }
 
     func run(using ctx: CommandContext<Bootstrap>) throws {
         ctx.console.output("Perfection 👨🏻‍🍳👌", style: .plain)
+        ctx.console.pushEphemeral()
         let loadingBar = ctx.console.loadingBar(title: "Bootstrapping")
         loadingBar.start()
 
         firstly {
-            when(fulfilled: bootstrapTasks)
+            when(fulfilled: bootstrapTasks(ctx.console))
         }.ensure {
             loadingBar.succeed()
         }.catch { error in

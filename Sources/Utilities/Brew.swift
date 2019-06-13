@@ -16,9 +16,7 @@ struct Brew {
                 workingDirectoryPath: nil,
                 env: nil,
                 onStdout: { output in
-                    print(output)
                 }, onStderr: { error in
-                    print(error)
                 }, onCompletion: { result in
                     seal.fulfill()
                 }
