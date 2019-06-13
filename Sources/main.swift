@@ -1,18 +1,9 @@
 import Foundation
 import ConsoleKit
 
-//func setup() {
-//    let home = FileManager.default.homeDirectoryForCurrentUser
-//
-//    Apps.install(home)
-//    Fonts.install(home)
-//}
-//
-//setup()
-
 final class Main: CommandGroup {
-    struct Signature: CommandSignature {}
 
+    struct Signature: CommandSignature {}
     let signature: Signature = Signature()
 
     let commands: Commands = [
