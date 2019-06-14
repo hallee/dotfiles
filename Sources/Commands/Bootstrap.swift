@@ -10,23 +10,24 @@ final class Bootstrap: Command {
 
     let help: String = "Bootstraps my development environment. 👨🏻‍🍳👌"
 
-    func bootstrapTasks(_ console: Console) -> [Promise<Void>] {
+    func bootstrapTasks(_ console: Console) throws -> [Promise<Void>] {
          return [
-             Apps.install(console),
-             Fonts.install()
+//             Apps.install(console),
+             try Fonts.install()
          ]
      }
 
     func run(using ctx: CommandContext<Bootstrap>) throws {
         ctx.console.output("Perfection 👨🏻‍🍳👌", style: .plain)
         ctx.console.pushEphemeral()
-        let loadingBar = ctx.console.loadingBar(title: "Bootstrapping")
-        loadingBar.start()
+//        let loadingBar = ctx.console.loadingBar(title: "Bootstrapping")
+//        loadingBar.start()
 
         firstly {
-            when(fulfilled: bootstrapTasks(ctx.console))
+            when(fulfilled: try bootstrapTasks(ctx.console))
         }.ensure {
-            loadingBar.succeed()
+//            loadingBar.succeed()
+            print("DONE")
         }.catch { error in
             fatalError(error.localizedDescription)
         }
