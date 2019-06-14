@@ -13,7 +13,7 @@ final class Bootstrap: Command {
     func bootstrapTasks(_ console: Console) throws -> [Promise<Void>] {
          return [
 //             Apps.install(console),
-             try Fonts.install()
+             Fonts.install()
          ]
      }
 

@@ -2,9 +2,8 @@ import Foundation
 import PromiseKit
 
 struct Fonts {
-    private static let queue = DispatchQueue(label: "dotfiles-fonts")
 
-    static func install() throws -> Promise<Void> {
+    static func install() -> Promise<Void> {
         try? removeOldFontDirectory()
         return Git.clone("git@github.com:hallee/fonts.git")
     }
