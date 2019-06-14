@@ -10,17 +10,13 @@ struct Brew {
 
     private static func run(_ commands: [String]) -> Promise<Void> {
         return Promise<Void> { seal in
-            Shell().async(
-                ["/usr/local/bin/brew"] + commands,
-                shouldBeTerminatedOnParentExit: false,
-                workingDirectoryPath: nil,
-                env: nil,
-                onStdout: { output in
-                }, onStderr: { error in
-                }, onCompletion: { result in
-                    seal.fulfill()
-                }
-            )
+            🐚.run(
+                command: ["/usr/local/bin/brew"] + commands,
+                stdout: { output in },
+                stderr: { error in }
+            ) {
+                seal.fulfill()
+            }
         }
     }
 
