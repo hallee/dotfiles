@@ -39,6 +39,7 @@ struct SublimeText {
             )
             while let file = searcher?.nextObject() as? URL {
                 let destinationPath = sublimeSettingsPath + file.lastPathComponent
+                try? FileManager.default.removeItem(atPath: destinationPath)
                 try FileManager.default.createSymbolicLink(
                     at: URL(fileURLWithPath: destinationPath),
                     withDestinationURL: file
