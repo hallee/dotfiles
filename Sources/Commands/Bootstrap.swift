@@ -11,12 +11,12 @@ final class Bootstrap: Command {
 
     func bootstrapTasks() -> [Promise<Void>] {
         return [
-            Home.symlink()
-//            Apps.install(),
-//            Fonts.install(),
-//            iTerm.install(),
-//            SublimeText.install(),
-//            WebDevelopment.setup()
+            Home.symlink(),
+            Apps.install(),
+            Fonts.install(),
+            iTerm.install(),
+            SublimeText.install(),
+            WebDevelopment.setup()
         ]
     }
 
