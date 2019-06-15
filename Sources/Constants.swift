@@ -2,7 +2,15 @@ import Foundation
 
 struct Constants {
     static let home = FileManager.default.homeDirectoryForCurrentUser.path
-    
+
+    /// Global git configuration
+    static let globalGitignorePath = home + "/.gitignore"
+    static let globalGitignore = """
+        .DS_Store
+        """
+    static let globalGitName = "Hal Lee"
+    static let globalGitEmail = "hal@lee.me"
+
     /// Clone location for git repos
     static let codeLocation = home + "/Code"
 

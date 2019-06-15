@@ -19,21 +19,27 @@ struct Git {
         }
     }
 
-    static func setupGlobalGitignore() -> Promise<Void> {
-        let globalGitignoreFile = Constants.home + "/.gitignore"
-        let gitignore = """
-            .DS_Store
-            """.data(using: .utf8)
-
+    static func setupGlobalGit() -> Promise<Void> {
         return Promise<Void> { seal in
             🐚.run(command:
                 ["git", "config", "--global",
-                 "core.excludesfile", globalGitignoreFile]
+                 "core.excludesfile", Constants.globalGitignorePath]
             ) {
-                FileManager.default.createFile(atPath: globalGitignoreFile,
-                                               contents: gitignore,
-                                               attributes: nil)
-                seal.fulfill()
+                FileManager.default.createFile(
+                    atPath: Constants.globalGitignorePath,
+                    contents: Constants.globalGitignore.data(using: .utf8),
+                    attributes: nil)
+                🐚.run(command:
+                    ["git", "config", "--global",
+                     "user.name", Constants.globalGitName]
+                ) {
+                    🐚.run(command:
+                        ["git", "config", "--global",
+                         "user.email", Constants.globalGitEmail]
+                    ) {
+                        seal.fulfill()
+                    }
+                }
             }
         }
     }

@@ -11,12 +11,13 @@ final class Bootstrap: Command {
     let help: String = "Bootstraps my development environment. 👨🏻‍🍳👌"
 
     func bootstrapTasks() -> [Promise<Void>] {
-         return [
-//             Apps.install(),
-             Fonts.install(),
-             SublimeText.install()
-         ]
-     }
+        return [
+            Git.setupGlobalGit(),
+            Apps.install(),
+            Fonts.install(),
+            SublimeText.install()
+        ]
+    }
 
     func run(using ctx: CommandContext<Bootstrap>) {
         Output.shared.console = ctx.console
