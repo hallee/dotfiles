@@ -3,9 +3,7 @@ import PromiseKit
 
 struct SublimeText {
 
-    static let sublimeSettingsPath = Constants.home
-        + "/Library/Application Support/Sublime Text 3/"
-
+    static let sublimeSettingsURL = Constants.home.appendingPathComponent("Library/Application Support/Sublime Text 3/")
     static let sublimeExecutablePath = "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
 
     static func install() -> Promise<Void> {
@@ -44,7 +42,7 @@ struct SublimeText {
                 return
             }
 
-            Output.shared.print("==> Linking Sublime Text settings from \(settingsPath) to \(sublimeSettingsPath)")
+            Output.shared.print("==> Linking Sublime Text settings from \(settingsPath) to \(sublimeSettingsURL.path)")
 
             let searcher = FileManager.default.enumerator(
                 at: URL(fileURLWithPath: settingsPath),
@@ -54,10 +52,10 @@ struct SublimeText {
                           .skipsSubdirectoryDescendants]
             )
             while let file = searcher?.nextObject() as? URL {
-                let destinationPath = sublimeSettingsPath + file.lastPathComponent
-                try? FileManager.default.removeItem(atPath: destinationPath)
+                let destination = sublimeSettingsURL.appendingPathComponent(file.lastPathComponent)
+                try? FileManager.default.removeItem(at: destination)
                 try FileManager.default.createSymbolicLink(
-                    at: URL(fileURLWithPath: destinationPath),
+                    at: destination,
                     withDestinationURL: file
                 )
             }
@@ -75,7 +73,7 @@ struct SublimeText {
 
         folderName.removeLast(4) // remove '.git'
 
-        let settingsPath = Constants.codeLocation + "/" + folderName + "/"
+        let settingsPath = Constants.codeLocation.appendingPathComponent(folderName).path
 
         return settingsPath
     }

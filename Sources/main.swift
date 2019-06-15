@@ -1,6 +1,5 @@
 import Foundation
 import ConsoleKit
-import Shell
 
 final class Main: CommandGroup {
 

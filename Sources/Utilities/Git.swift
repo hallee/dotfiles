@@ -19,29 +19,4 @@ struct Git {
         }
     }
 
-    static func setupGlobalGit() -> Promise<Void> {
-        return Promise<Void> { seal in
-            🐚.run(command:
-                ["git", "config", "--global",
-                 "core.excludesfile", Constants.globalGitignorePath]
-            ) {
-                FileManager.default.createFile(
-                    atPath: Constants.globalGitignorePath,
-                    contents: Constants.globalGitignore.data(using: .utf8),
-                    attributes: nil)
-                🐚.run(command:
-                    ["git", "config", "--global",
-                     "user.name", Constants.globalGitName]
-                ) {
-                    🐚.run(command:
-                        ["git", "config", "--global",
-                         "user.email", Constants.globalGitEmail]
-                    ) {
-                        seal.fulfill()
-                    }
-                }
-            }
-        }
-    }
-
 }

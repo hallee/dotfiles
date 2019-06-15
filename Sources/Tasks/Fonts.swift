@@ -4,11 +4,11 @@ import PromiseKit
 struct Fonts {
 
     private static var fontPath: String {
-        Constants.codeLocation + "/fonts"
+        Constants.codeLocation.appendingPathComponent("fonts").path
     }
 
     private static var fontInstallPath: String {
-        Constants.home + "/Library/Fonts"
+        Constants.home.path + "/Library/Fonts"
     }
 
     static func install() -> Promise<Void> {

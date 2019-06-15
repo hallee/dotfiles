@@ -1,7 +1,6 @@
 import Foundation
 import ConsoleKit
 import PromiseKit
-import Shell
 
 final class Bootstrap: Command {
 
@@ -12,17 +11,18 @@ final class Bootstrap: Command {
 
     func bootstrapTasks() -> [Promise<Void>] {
         return [
-            Git.setupGlobalGit(),
-            Apps.install(),
-            Fonts.install(),
-            SublimeText.install()
+            Home.symlink()
+//            Apps.install(),
+//            Fonts.install(),
+//            iTerm.install(),
+//            SublimeText.install(),
+//            WebDevelopment.setup()
         ]
     }
 
     func run(using ctx: CommandContext<Bootstrap>) {
         Output.shared.console = ctx.console
         Output.shared.loadingBar("Bootstrapping...")
-
 
         when(resolved: bootstrapTasks()).done { results in
             try results.forEach { try $0.get() } // throw any errors

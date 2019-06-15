@@ -1,6 +1,5 @@
 import Foundation
 import PromiseKit
-import Shell
 
 struct Brew {
 
@@ -12,12 +11,8 @@ struct Brew {
         return Promise<Void> { seal in
             🐚.run(
                 command: ["/usr/local/bin/brew"] + commands,
-                stdout: { output in
-                    Output.shared.print(output)
-                },
-                stderr: { error in
-                    Output.shared.print(error, style: .error)
-                }
+                stdout: { Output.shared.print($0) },
+                stderr: { Output.shared.print($0, style: .error) }
             ) {
                 seal.fulfill()
             }
