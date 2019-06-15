@@ -14,7 +14,7 @@ struct Fonts {
     static func install() -> Promise<Void> {
         try? removeOldFontDirectory()
         return firstly {
-            Git.clone("git@github.com:hallee/fonts.git")
+            Git.clone(Constants.fontsRepo)
         }.then {
             recursivelyFindAllFonts()
         }.then { urls in
@@ -33,6 +33,8 @@ struct Fonts {
                 options: [.skipsPackageDescendants, .skipsHiddenFiles]
             )
 
+            Output.shared.print("==> Searching for fonts...")
+
             while let file = searcher?.nextObject() as? URL {
                 guard let identifier = try? file.resourceValues(
                     forKeys: [.typeIdentifierKey]
@@ -50,6 +52,8 @@ struct Fonts {
 
     private static func installFonts(_ fonts: [URL]) -> Promise<Void> {
         return Promise<Void> { seal in
+            Output.shared.print("==> Found \(fonts.count) fonts, installing...")
+
             fonts.forEach { font in
                 try? FileManager.default.moveItem(atPath: font.path,
                                                   toPath: fontInstallPath)

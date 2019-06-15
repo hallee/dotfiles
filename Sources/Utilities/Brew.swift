@@ -12,8 +12,12 @@ struct Brew {
         return Promise<Void> { seal in
             🐚.run(
                 command: ["/usr/local/bin/brew"] + commands,
-                stdout: { output in },
-                stderr: { error in }
+                stdout: { output in
+                    Output.shared.print(output)
+                },
+                stderr: { error in
+                    Output.shared.print(error, style: .error)
+                }
             ) {
                 seal.fulfill()
             }

@@ -12,22 +12,22 @@ final class Bootstrap: Command {
 
     func bootstrapTasks(_ console: Console) throws -> [Promise<Void>] {
          return [
-//             Apps.install(console),
+             Apps.install(),
              Fonts.install()
          ]
      }
 
     func run(using ctx: CommandContext<Bootstrap>) throws {
-        ctx.console.output("Perfection 👨🏻‍🍳👌", style: .plain)
-        ctx.console.pushEphemeral()
-//        let loadingBar = ctx.console.loadingBar(title: "Bootstrapping")
-//        loadingBar.start()
+        Output.shared.console = ctx.console
+        Output.shared.loadingBar("Bootstrapping...")
 
         firstly {
             when(fulfilled: try bootstrapTasks(ctx.console))
         }.ensure {
-//            loadingBar.succeed()
-            print("DONE")
+            Output.shared.stopLoading()
+            Output.shared.print("Perfection 👨🏻‍🍳👌", style: .success, pop: false) {
+                exit(EXIT_SUCCESS)
+            }
         }.catch { error in
             fatalError(error.localizedDescription)
         }

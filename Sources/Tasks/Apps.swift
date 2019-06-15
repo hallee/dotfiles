@@ -18,15 +18,8 @@ struct Apps {
         "audio-hijack"
     ]
 
-    static func install(_ console: Console) -> Promise<Void> {
-//        let loadingBar = console.loadingBar(title: "Installing apps...")
-//        loadingBar.start() /// TODO: crashes
-
-        return firstly {
-            Brew.cask(appsToInstall)
-        }.ensure {
-//            loadingBar.succeed()
-        }
+    static func install() -> Promise<Void> {
+        return Brew.cask(appsToInstall)
     }
 
 }
