@@ -4,17 +4,17 @@ import PromiseKit
 struct Fonts {
 
     private static var fontPath: String {
-        FileManager.default.currentDirectoryPath + "/fonts"
+        Constants.codeLocation + "/fonts"
     }
 
     private static var fontInstallPath: String {
-        FileManager.default.homeDirectoryForCurrentUser.path + "/Library/Fonts"
+        Constants.home + "/Library/Fonts"
     }
 
     static func install() -> Promise<Void> {
         try? removeFontDirectory()
         return firstly {
-            Git.clone(Constants.fontsRepo)
+            Git.clone(Constants.fontsRepo, into: fontPath)
         }.then {
             recursivelyFindAllFonts()
         }.then { urls in
@@ -34,7 +34,6 @@ struct Fonts {
                 includingPropertiesForKeys: [.typeIdentifierKey],
                 options: [.skipsPackageDescendants, .skipsHiddenFiles]
             )
-
             Output.shared.print("==> Searching for fonts...")
 
             while let file = searcher?.nextObject() as? URL {

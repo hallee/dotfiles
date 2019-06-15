@@ -4,10 +4,10 @@ import Shell
 
 struct Git {
 
-    static func clone(_ url: String) -> Promise<Void> {
+    static func clone(_ url: String, into: String? = nil) -> Promise<Void> {
         return Promise<Void> { seal in
             🐚.run(
-                command: ["git", "clone", url],
+                command: ["git", "clone", url, into ?? ""],
                 stdout: { output in
                     Output.shared.print(output)
                 },
