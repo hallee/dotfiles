@@ -7,9 +7,11 @@ struct SublimeText {
     static let sublimeSettingsPath = Constants.home
         + "/Library/Application Support/Sublime Text 3/"
 
+    static let sublimeExecutablePath = "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
+
     static func install() -> Promise<Void> {
         return firstly {
-            Brew.cask(["sublime-text"])
+            symbolicLinkSubl()
         }.then {
             downloadSettings()
         }.then {
@@ -17,8 +19,21 @@ struct SublimeText {
         }
     }
 
+    private static func symbolicLinkSubl() -> Promise<Void> {
+        return Promise<Void> { seal in
+            try? FileManager.default.removeItem(atPath: "/usr/local/bin/subl")
+            try FileManager.default.createSymbolicLink(
+                atPath: "/usr/local/bin/subl",
+                withDestinationPath: sublimeExecutablePath)
+            seal.fulfill()
+        }
+    }
+
     private static func downloadSettings() -> Promise<Void> {
-        return Git.clone(Constants.sublimeSettingsRepo, into: Constants.codeLocation)
+        if let settingsFolderPath = settingsFolderPath {
+            try? FileManager.default.removeItem(atPath: settingsFolderPath)
+        }
+        return Git.clone(Constants.sublimeSettingsRepo, into: settingsFolderPath)
     }
 
     private static func symbolicLinkSettings() -> Promise<Void> {
