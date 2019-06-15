@@ -12,11 +12,9 @@ struct 🐚 {
             shouldBeTerminatedOnParentExit: true,
             workingDirectoryPath: nil,
             env: nil,
-            onStdout: { output in
-                stdout?(output)
-            }, onStderr: { error in
-                stderr?(error)
-            }, onCompletion: { result in
+            onStdout: { stdout?($0) },
+            onStderr: { stderr?($0) },
+            onCompletion: { _ in
                 completion()
             }
         )

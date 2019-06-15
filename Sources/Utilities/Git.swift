@@ -1,6 +1,5 @@
 import Foundation
 import PromiseKit
-import Shell
 
 struct Git {
 
@@ -15,6 +14,25 @@ struct Git {
                     Output.shared.print(error, style: .error)
                 }
             ) {
+                seal.fulfill()
+            }
+        }
+    }
+
+    static func setupGlobalGitignore() -> Promise<Void> {
+        let globalGitignoreFile = Constants.home + "/.gitignore"
+        let gitignore = """
+            .DS_Store
+            """.data(using: .utf8)
+
+        return Promise<Void> { seal in
+            🐚.run(command:
+                ["git", "config", "--global",
+                 "core.excludesfile", globalGitignoreFile]
+            ) {
+                FileManager.default.createFile(atPath: globalGitignoreFile,
+                                               contents: gitignore,
+                                               attributes: nil)
                 seal.fulfill()
             }
         }
