@@ -12,13 +12,15 @@ struct Fonts {
     }
 
     static func install() -> Promise<Void> {
-        try? removeOldFontDirectory()
+        try? removeFontDirectory()
         return firstly {
             Git.clone(Constants.fontsRepo)
         }.then {
             recursivelyFindAllFonts()
         }.then { urls in
             installFonts(urls)
+        }.ensure {
+            try? removeFontDirectory()
         }
     }
 
@@ -62,7 +64,7 @@ struct Fonts {
         }
     }
 
-    private static func removeOldFontDirectory() throws {
+    private static func removeFontDirectory() throws {
         try FileManager.default.removeItem(atPath: fontPath)
     }
 
