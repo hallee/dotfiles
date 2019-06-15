@@ -1,5 +1,4 @@
 import Foundation
-import ConsoleKit
 import PromiseKit
 
 struct SublimeText {
@@ -11,6 +10,8 @@ struct SublimeText {
 
     static func install() -> Promise<Void> {
         return firstly {
+            Brew.cask(["sublime-text"])
+        }.then {
             symbolicLinkSubl()
         }.then {
             downloadSettings()
