@@ -3,18 +3,18 @@ import PromiseKit
 
 struct Fonts {
 
-    private static var fontPath: String {
-        Constants.codeLocation.appendingPathComponent("fonts").path
+    private static var fontURL: URL {
+        Constants.codeLocation.appendingPathComponent("fonts")
     }
 
-    private static var fontInstallPath: String {
-        Constants.home.path + "/Library/Fonts"
+    private static var fontInstallURL: URL {
+        Constants.home.appendingPathComponent("Library/Fonts/")
     }
 
     static func install() -> Promise<Void> {
         try? removeFontDirectory()
         return firstly {
-            Git.clone(Constants.fontsRepo, into: fontPath)
+            Git.clone(Constants.fontsRepo, into: fontURL.path)
         }.then {
             recursivelyFindAllFonts()
         }.then { urls in
@@ -30,7 +30,7 @@ struct Fonts {
             var fonts = [URL]()
 
             let searcher = FileManager.default.enumerator(
-                at: URL(fileURLWithPath: fontPath),
+                at: fontURL,
                 includingPropertiesForKeys: [.typeIdentifierKey],
                 options: [.skipsPackageDescendants, .skipsHiddenFiles]
             )
@@ -56,15 +56,17 @@ struct Fonts {
             Output.shared.print("==> Found \(fonts.count) fonts, installing...")
 
             fonts.forEach { font in
-                try? FileManager.default.moveItem(atPath: font.path,
-                                                  toPath: fontInstallPath)
+                try? FileManager.default.moveItem(
+                    at: font,
+                    to: fontInstallURL.appendingPathComponent(font.lastPathComponent)
+                )
             }
             seal.fulfill()
         }
     }
 
     private static func removeFontDirectory() throws {
-        try FileManager.default.removeItem(atPath: fontPath)
+        try FileManager.default.removeItem(at: fontURL)
     }
 
 }
