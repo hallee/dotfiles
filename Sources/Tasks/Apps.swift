@@ -5,8 +5,9 @@ import PromiseKit
 struct Apps {
 
     private static let appsToInstall = [
+        "sketch",
         "github",
-        "discord",
+        "discord", 
         "istat-menus",
         "bartender",
         "geekbench",
