@@ -25,6 +25,5 @@ antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-autosuggestions
 antigen apply
 
-
-
-
+# ==== Hub ====
+eval "$(hub alias -s)"

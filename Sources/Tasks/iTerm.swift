@@ -8,7 +8,7 @@ struct iTerm {
         return firstly {
             Brew.cask(["iterm2-nightly"])
         }.then {
-            Brew.run("install", "zsh", "fzf", "antigen")
+            Brew.run("install", "zsh", "fzf", "antigen", "hub")
         }.then {
             installFuzzyFind()
         }
