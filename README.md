@@ -1,21 +1,18 @@
 ## dotfiles
 
-This is my dotfiles. The goal is to make setting up new computers easier, and to keep critical settings and preferences in sync between my handful of computers I use frequently.
+This is my dotfiles. The goal is to make setting up new computers easier, and to keep critical settings and preferences in sync between computers I use frequently.
 
-`dotfiles`, and this repository, is a Swift CLI program.
+`dotfiles` is a Swift CLI program. See [`Package.swift`](Package.swift).
 
 ### Installation
 
 ```sh
 brew tap hallee/tap
 brew install hallee/tap/dotfiles
-```
-
-### Usage
-
-```sh
 dotfiles bootstrap # initial setup
 ```
+
+Files in [Home](Home) will be symlinked to `~`.
 
 ### Building `dotfiles` from source
 
@@ -35,8 +32,12 @@ I use iTerm2 with `zsh` and Antigen for plugin management.
 
 ### Sublime Text
 
+My Sublime settings are a bit involved. Everything is symlinked and synced between computers through a private repo, https://github.com/hallee/sublime-settings, that contains `Packages` and `Installed Packages`.
+
 ![sublime](sublime.png)
 
-### iStat Menus
+### iStat Menus + Bartender
+
+I like a clean menu bar.
 
 ![istat](istat.png)
