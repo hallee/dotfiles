@@ -53,6 +53,11 @@ struct SublimeText {
             )
             while let file = searcher?.nextObject() as? URL {
                 let destination = sublimeSettingsURL.appendingPathComponent(file.lastPathComponent)
+                try? FileManager.default.createDirectory(
+                    at: destination,
+                    withIntermediateDirectories: true,
+                    attributes: nil
+                )
                 try? FileManager.default.removeItem(at: destination)
                 try FileManager.default.createSymbolicLink(
                     at: destination,

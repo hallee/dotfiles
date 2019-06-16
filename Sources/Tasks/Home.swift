@@ -27,6 +27,11 @@ struct Home {
                 let relativeFilePathComponent = relativeFileComponents.joined(separator: "/")
                 let destination = Constants.home.appendingPathComponent(relativeFilePathComponent)
 
+                try? FileManager.default.createDirectory(
+                    at: destination,
+                    withIntermediateDirectories: true,
+                    attributes: nil
+                )
                 try? FileManager.default.removeItem(at: destination)
                 try FileManager.default.createSymbolicLink(
                     at: destination,

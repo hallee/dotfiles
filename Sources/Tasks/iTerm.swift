@@ -6,6 +6,8 @@ struct iTerm {
     /// Installs and configures iTerm2 with zsh
     static func install() -> Promise<Void> {
         return firstly {
+            Brew.run("tap", "homebrew/cask-versions")
+        }.then {
             Brew.cask(["iterm2-nightly"])
         }.then {
             Brew.run("install", "zsh", "fzf", "antigen", "hub")
