@@ -31,7 +31,7 @@ cp .build/release/dotfiles .
 
 I use iTerm2 with `zsh` and Antigen for plugin management.
 
-![iterm2](iterm2.png)
+![iterm2](iterm.png)
 
 ### Sublime Text
 
