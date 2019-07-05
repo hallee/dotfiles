@@ -31,9 +31,10 @@ struct Icons {
             let iconsFolderURL = URL(fileURLWithPath: iconsFolderPath)
 
             let iconURLs = findIconFiles(in: iconsFolderURL)
+            let iconsAndMatchingApplications = findMatchingApplications(for: iconURLs)
 
-            iconURLs.forEach { iconFile in
-                guard let application = findMatchingApplication(for: iconFile)?.path else { return }
+            for (iconFile, applicationFile) in iconsAndMatchingApplications {
+                guard let application = applicationFile?.path else { continue }
                 let iconImage = NSImage(contentsOf: iconFile)
                 let success = NSWorkspace.shared.setIcon(iconImage, forFile: application, options: [])
                 print(success)
@@ -64,8 +65,8 @@ struct Icons {
         return iconURLs
     }
 
-    private static func findMatchingApplication(for iconFile: URL) -> URL? {
-        guard let applicationName = iconFile.lastPathComponent.split(separator: ".").first else { return nil }
+    private static func findMatchingApplications(for iconFiles: [URL]) -> [URL: URL?] {
+        var iconsAndMatchingApplications = [URL: URL?]()
 
         let searcher = FileManager.default.enumerator(
             at: URL(fileURLWithPath: "/Applications/"),
@@ -79,12 +80,18 @@ struct Icons {
             ).typeIdentifier else { continue }
             /// `com.apple.application-bundle`
             guard identifier == "com.apple.application-bundle" else { continue }
-            if file.lastPathComponent.contains(applicationName) {
-                return file
+
+            for iconFile in iconFiles {
+                guard let applicationName = iconFile.lastPathComponent.split(separator: ".").first else { continue }
+
+                if file.lastPathComponent.contains(applicationName) {
+                    iconsAndMatchingApplications[iconFile] = file
+                }
             }
+
         }
 
-        return nil
+        return iconsAndMatchingApplications
     }
 
     private static var iconsFolderPath: String? {
