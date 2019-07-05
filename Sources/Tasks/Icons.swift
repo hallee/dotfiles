@@ -36,10 +36,13 @@ struct Icons {
             for (iconFile, applicationFile) in iconsAndMatchingApplications {
                 guard let application = applicationFile?.path else { continue }
                 let iconImage = NSImage(contentsOf: iconFile)
-                let success = NSWorkspace.shared.setIcon(iconImage, forFile: application, options: [])
-                print(success)
-                print(application)
+                let success = NSWorkspace.shared.setIcon(iconImage, forFile: application, options: .init(rawValue: 0))
+                if !success {
+                    Output.shared.print("Failed to set icon for \(application)", style: .error)
+                }
             }
+
+            seal.fulfill()
         }
     }
 

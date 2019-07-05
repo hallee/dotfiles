@@ -11,19 +11,22 @@ final class Bootstrap: Command {
 
     lazy var bootstrapTasks: [Promise<Void>] = {
         [
-//            Home.symlink(),
-//            Fonts.install(),
-//            iTerm.install(),
-//            SublimeText.install(),
-//            WebDevelopment.setup(),
-            Icons.install()
+            Home.symlink(),
+            Fonts.install(),
+            iTerm.install(),
+            SublimeText.install(),
+            WebDevelopment.setup()
         ]
     }()
 
+    lazy var postBoostrapTasks: [Promise<Void>] = {
+        [Icons.install()]
+    }()
+
     func run(using ctx: CommandContext<Bootstrap>) {
-//        if ctx.console.confirm("Install all apps? (Takes awhile)") {
-//            bootstrapTasks.append(Apps.install())
-//        }
+        if ctx.console.confirm("Install all apps? (Takes awhile)") {
+            bootstrapTasks.append(Apps.install())
+        }
 
         Output.shared.console = ctx.console
         Output.shared.loadingBar("Bootstrapping...")
@@ -31,9 +34,15 @@ final class Bootstrap: Command {
         when(resolved: bootstrapTasks).done { results in
             try results.forEach { try $0.get() } // throw any errors
 
-            Output.shared.stopLoading()
-            Output.shared.print("Perfection 👨🏻‍🍳👌", style: .success, pop: false) {
-                exit(EXIT_SUCCESS)
+            when(resolved: self.postBoostrapTasks).done { results in
+                try results.forEach { try $0.get() } // throw any errors
+
+                Output.shared.stopLoading()
+                Output.shared.print("Perfection 👨🏻‍🍳👌", style: .success, pop: false) {
+                    exit(EXIT_SUCCESS)
+                }
+            }.catch { error in
+                fatalError(error.localizedDescription)
             }
         }.catch { error in
             fatalError(error.localizedDescription)
