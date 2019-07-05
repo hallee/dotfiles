@@ -19,7 +19,7 @@ final class Main: CommandGroup {
 
 public func run() throws {
     var input = CommandInput(arguments: CommandLine.arguments)
-    try Terminal().run(Main(), input: &input)
+    try Terminal().run(Bootstrap(), input: &input)
 }
 
 try run()

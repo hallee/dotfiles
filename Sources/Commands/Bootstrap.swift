@@ -11,18 +11,19 @@ final class Bootstrap: Command {
 
     lazy var bootstrapTasks: [Promise<Void>] = {
         [
-            Home.symlink(),
-            Fonts.install(),
-            iTerm.install(),
-            SublimeText.install(),
-            WebDevelopment.setup()
+//            Home.symlink(),
+//            Fonts.install(),
+//            iTerm.install(),
+//            SublimeText.install(),
+//            WebDevelopment.setup(),
+            Icons.install()
         ]
     }()
 
     func run(using ctx: CommandContext<Bootstrap>) {
-        if ctx.console.confirm("Install all apps? (Takes awhile)") {
-            bootstrapTasks.append(Apps.install())
-        }
+//        if ctx.console.confirm("Install all apps? (Takes awhile)") {
+//            bootstrapTasks.append(Apps.install())
+//        }
 
         Output.shared.console = ctx.console
         Output.shared.loadingBar("Bootstrapping...")
