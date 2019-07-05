@@ -7,7 +7,7 @@ final class Bootstrap: Command {
     struct Signature: CommandSignature {}
     let signature: Signature = Signature()
 
-    let help: String = "Bootstraps my development environment. 👨🏻‍🍳👌"
+    let help: String = "Bootstraps my development environment 👨🏻‍🍳👌"
 
     lazy var bootstrapTasks: [Promise<Void>] = {
         [
@@ -19,30 +19,20 @@ final class Bootstrap: Command {
         ]
     }()
 
-    lazy var postBoostrapTasks: [Promise<Void>] = {
-        [Icons.install()]
-    }()
-
-    func run(using ctx: CommandContext<Bootstrap>) {
-        if ctx.console.confirm("Install all apps? (Takes awhile)") {
+    func run(using context: CommandContext<Bootstrap>) {
+        if context.console.confirm("Install all apps? (Takes awhile)") {
             bootstrapTasks.append(Apps.install())
         }
 
-        Output.shared.console = ctx.console
+        Output.shared.console = context.console
         Output.shared.loadingBar("Bootstrapping...")
 
         when(resolved: bootstrapTasks).done { results in
             try results.forEach { try $0.get() } // throw any errors
 
-            when(resolved: self.postBoostrapTasks).done { results in
-                try results.forEach { try $0.get() } // throw any errors
-
-                Output.shared.stopLoading()
-                Output.shared.print("Perfection 👨🏻‍🍳👌", style: .success, pop: false) {
-                    exit(EXIT_SUCCESS)
-                }
-            }.catch { error in
-                fatalError(error.localizedDescription)
+            Output.shared.stopLoading()
+            Output.shared.print("Perfection 👨🏻‍🍳👌", style: .success, pop: false) {
+                exit(EXIT_SUCCESS)
             }
         }.catch { error in
             fatalError(error.localizedDescription)

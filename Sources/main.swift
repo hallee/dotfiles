@@ -7,7 +7,8 @@ final class Main: CommandGroup {
     let signature: Signature = Signature()
 
     let commands: Commands = [
-        "bootstrap": Bootstrap()
+        "bootstrap": Bootstrap(),
+        "app-icons": CustomizeIcons()
     ]
 
     let help: String = "My dotfiles."
