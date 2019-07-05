@@ -7,7 +7,7 @@ final class CustomizeIcons: Command {
     struct Signature: CommandSignature {}
     let signature: Signature = Signature()
 
-    let help: String = "Customize application icons "
+    let help: String = "Customize application icons"
 
     lazy var tasks: [Promise<Void>] = {
         [
