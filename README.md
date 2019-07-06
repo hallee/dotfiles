@@ -37,7 +37,7 @@ My Sublime settings are a bit involved. Everything is symlinked and synced betwe
 I still like to customize some app icons. `dotfiles` has a command for this:
 
 ```sh
-dotfiles app-icons
+sudo dotfiles app-icons
 ```
 
 ![dock](dock.png)
