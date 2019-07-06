@@ -32,6 +32,12 @@ My Sublime settings are a bit involved. Everything is symlinked and synced betwe
 
 ![sublime](sublime.png)
 
+#### Xcode
+
+I use a theme based off of GitHub's "One Dark" theme.
+
+![xcode](xcode.png)
+
 #### Dock
 
 I still like to customize some app icons. `dotfiles` has a command for this:
