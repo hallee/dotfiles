@@ -11,4 +11,7 @@ struct Constants {
 
     /// Repo containing `Installed Packages` and `Packages` for Sublime Text
     static let sublimeSettingsRepo = "git@github.com:hallee/sublime-settings.git"
+
+    /// Repo containing app icons for customization
+    static let appIconsRepo = "git@github.com:hallee/app-icons.git"
 }

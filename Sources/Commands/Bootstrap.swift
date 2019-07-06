@@ -7,7 +7,7 @@ final class Bootstrap: Command {
     struct Signature: CommandSignature {}
     let signature: Signature = Signature()
 
-    let help: String = "Bootstraps my development environment. 👨🏻‍🍳👌"
+    let help: String = "Bootstraps my development environment 👨🏻‍🍳👌"
 
     lazy var bootstrapTasks: [Promise<Void>] = {
         [
@@ -19,12 +19,12 @@ final class Bootstrap: Command {
         ]
     }()
 
-    func run(using ctx: CommandContext<Bootstrap>) {
-        if ctx.console.confirm("Install all apps? (Takes awhile)") {
+    func run(using context: CommandContext<Bootstrap>) {
+        if context.console.confirm("Install all apps? (Takes awhile)") {
             bootstrapTasks.append(Apps.install())
         }
 
-        Output.shared.console = ctx.console
+        Output.shared.console = context.console
         Output.shared.loadingBar("Bootstrapping...")
 
         when(resolved: bootstrapTasks).done { results in
