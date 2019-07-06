@@ -24,19 +24,19 @@ Files in [Home](Home) will be symlinked to `~`.
 
 I use iTerm2 with `zsh` and Antigen for plugin management.
 
-![iterm2](iterm.png)
+![iterm2](Screenshots/iterm.png)
 
 #### Sublime Text
 
 My Sublime settings are a bit involved. Everything is symlinked and synced between computers through a repo, https://github.com/hallee/sublime-settings, that contains `Packages` and `Installed Packages`.
 
-![sublime](sublime.png)
+![sublime](Screenshots/sublime.png)
 
 #### Xcode
 
 I use a theme based off of GitHub's "One Dark" theme.
 
-![xcode](xcode.png)
+![xcode](Screenshots/xcode.png)
 
 #### Dock
 
@@ -46,13 +46,13 @@ I still like to customize some app icons. `dotfiles` has a command for this:
 sudo dotfiles app-icons
 ```
 
-![dock](dock.png)
+![dock](Screenshots/dock.png)
 
 #### iStat Menus + Bartender
 
 iStat Menus shows a history of CPU usage and GPU usage, with the current CPU temperature. Bartender hides ugly status bar icons.
 
-![istat](istat.png)
+![istat](Screenshots/istat.png)
 
 
 ## Development
