@@ -5,10 +5,6 @@ import AppKit
 
 struct Icons {
 
-    static var appsAndIcons = [
-        "Sublime Text.app": "Sublime Text"
-    ]
-
     static func install() -> Promise<Void> {
         return firstly {
             downloadIcons()
@@ -41,8 +37,6 @@ struct Icons {
                     Output.shared.print("Failed to set icon for \(application)", style: .error)
                 }
             }
-
-            seal.fulfill()
         }
     }
 

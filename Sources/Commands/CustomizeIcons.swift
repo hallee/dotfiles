@@ -15,7 +15,7 @@ final class CustomizeIcons: Command {
         ]
     }()
 
-    func run(using context: CommandContext<CustomizeIcons>) throws {
+    func run(using context: CommandContext, signature: CustomizeIcons.Signature) throws {
         Output.shared.console = context.console
         Output.shared.loadingBar("Customizing icons...")
 

@@ -12,10 +12,9 @@ struct Brew {
             🐚.run(
                 command: ["/usr/local/bin/brew"] + commands,
                 stdout: { Output.shared.print($0) },
-                stderr: { Output.shared.print($0, style: .error) }
-            ) {
-                seal.fulfill()
-            }
+                stderr: { Output.shared.print($0, style: .error) },
+                resolver: seal
+            )
         }
     }
 

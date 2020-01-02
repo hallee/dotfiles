@@ -9,9 +9,10 @@ struct WebDevelopment {
             Brew.run("brew", "install", "node", "vapor/tap/vapor", "yarn")
         }.then {
             Promise<Void> { seal in
-                🐚.run(command: ["yarn", "global", "add", "eslint", "babel-eslint", "eslint-plugin-vue@next"]) {
-                    seal.fulfill()
-                }
+                🐚.run(
+                    command: ["yarn", "global", "add", "eslint", "babel-eslint", "eslint-plugin-vue@next"],
+                    resolver: seal
+                )
             }
         }
     }

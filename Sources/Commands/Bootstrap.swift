@@ -19,7 +19,7 @@ final class Bootstrap: Command {
         ]
     }()
 
-    func run(using context: CommandContext<Bootstrap>) {
+    func run(using context: CommandContext, signature: Bootstrap.Signature) throws {
         if context.console.confirm("Install all apps? (Takes awhile)") {
             bootstrapTasks.append(Apps.install())
         }

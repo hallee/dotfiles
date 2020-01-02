@@ -1,4 +1,5 @@
 import Foundation
+import PromiseKit
 import Shell
 
 struct 🐚 {
@@ -6,7 +7,7 @@ struct 🐚 {
     static func run(command: [String],
                     stdout: ((String) -> Void)? = nil,
                     stderr: ((String) -> Void)? = nil,
-                    completion: @escaping () -> Void) {
+                    resolver: Resolver<Void>) {
         Shell().async(
             command,
             shouldBeTerminatedOnParentExit: true,
@@ -14,8 +15,11 @@ struct 🐚 {
             env: nil,
             onStdout: { stdout?($0) },
             onStderr: { stderr?($0) },
-            onCompletion: { _ in
-                completion()
+            onCompletion: { result in
+                switch result {
+                case .success: resolver.fulfill()
+                case .failure(let error): resolver.reject(error)
+                }
             }
         )
     }

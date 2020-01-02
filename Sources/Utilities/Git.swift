@@ -8,15 +8,18 @@ struct Git {
             🐚.run(
                 command: ["git", "clone", url, into ?? ""],
                 stdout: { output in
-                    Output.shared.print(output)
+                    Output.shared.print(output, style: .info)
                 },
                 stderr: { error in
                     Output.shared.print(error, style: .error)
-                }
-            ) {
-                seal.fulfill()
-            }
+                },
+                resolver: seal
+            )
         }
+    }
+
+    enum GitError: Error {
+        case cloneFailed(String)
     }
 
 }

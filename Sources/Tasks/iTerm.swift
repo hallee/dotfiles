@@ -21,9 +21,8 @@ struct iTerm {
             🐚.run(command: ["/usr/local/opt/fzf/install",
                                "--completion",
                                "--key-bindings",
-                               "--update-rc"]) {
-                seal.fulfill()
-            }
+                               "--update-rc"],
+                     resolver: seal)
         }
     }
 
