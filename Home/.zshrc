@@ -1,7 +1,12 @@
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.fastlane/bin:$PATH"
-export GOPATH="$HOME/Code/go"
 export TERM="xterm-256color"
+
+export GOPATH="$HOME/Code/go"
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+
 
 SAVEHIST=4000
 HISTSIZE=400
