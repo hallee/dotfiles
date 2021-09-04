@@ -10,7 +10,7 @@ let package = Package(
 		.executable(name: "dotfiles", targets: ["Dotfiles"])
 	],
 	dependencies: [
-		.package(url: "https://github.com/apple/swift-argument-parser", from: "0.4.4"),
+		.package(url: "https://github.com/apple/swift-argument-parser", from: "0.5.0"),
 		.package(url: "https://github.com/kareman/SwiftShell", from: "5.1.0")
 	],
 	targets: [
@@ -19,7 +19,10 @@ let package = Package(
 				.product(name: "ArgumentParser", package: "swift-argument-parser"),
 				.product(name: "SwiftShell", package: "SwiftShell")
 			],
-			path: "Sources"
+			path: "Sources",
+			resources: [
+				.copy("Resources/")
+			]
 		)
 	]
 )

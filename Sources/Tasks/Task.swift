@@ -17,9 +17,9 @@ enum Task: String, CaseIterable, EnumerableFlag {
 		print("\n\(description)")
 		switch self {
 		case .apps:
-			Apps.install()
+			try Apps.install()
 		case .developer:
-			Developer.setup()
+			try Developer.setup()
 		case .git:
 			try Git.setup()
 		}
