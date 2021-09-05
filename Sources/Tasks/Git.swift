@@ -1,13 +1,16 @@
+import ArgumentParser
 import SwiftShell
 
-enum Git {
+struct Git: ParsableCommand {
 
-	static func setup() throws {
+	func run() throws {
+		print(Task.git.description)
+
 		try Brew.install("git")
-		try main.runAndPrint("git", "config", "--global", "user.email", Constants.email)
-		try main.runAndPrint("git", "config", "--global", "user.name", Constants.name)
-		try main.runAndPrint("git", "config", "--global", "core.editor", Constants.editorCommand)
-		try main.runAndPrint("git", "config", "--global", "init.defaultBranch", Constants.defaultGitBranchName)
+		try runAndPrint("git", "config", "--global", "user.email", Constants.email)
+		try runAndPrint("git", "config", "--global", "user.name", Constants.name)
+		try runAndPrint("git", "config", "--global", "core.editor", Constants.editorCommand)
+		try runAndPrint("git", "config", "--global", "init.defaultBranch", Constants.defaultGitBranchName)
 	}
 
 }

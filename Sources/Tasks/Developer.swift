@@ -1,15 +1,18 @@
+import ArgumentParser
 import Foundation
 import SwiftShell
 
-enum Developer {
+struct Developer: ParsableCommand {
 
-	static func setup() throws {
+	func run() throws {
+		print(Task.developer.description)
+
 		createDeveloperDirectory()
 		try Brew.install("fzf", "antigen", "hub")
 		copyConfiguration()
 	}
 
-	private static func createDeveloperDirectory() {
+	private func createDeveloperDirectory() {
 		do {
 			try runAndPrint(
 				"mkdir",
@@ -20,7 +23,7 @@ enum Developer {
 		}
 	}
 
-	private static func copyConfiguration() {
+	private func copyConfiguration() {
 		guard let zshrc = Bundle.module.url(forResource: ".zshrc", withExtension: nil) else {
 			 return
 		}

@@ -1,7 +1,44 @@
 import AppKit
+import ArgumentParser
 import SwiftShell
 
-enum Apps: String, CaseIterable {
+struct Apps: ParsableCommand {
+
+	func run() throws {
+		print(Task.apps.description)
+
+		for app in App.allCases {
+			install(app)
+			try app.configure()
+		}
+		try copyPreferences()
+	}
+
+	private func install(_ app: App) {
+		guard !FileManager.default.fileExists(atPath: app.url.path) else {
+			print("\(app.url.path) already installed; skipping.")
+			return
+		}
+		do {
+			try Brew.install(app.rawValue, cask: true)
+		} catch {
+			print(error)
+		}
+	}
+
+	private func copyPreferences() throws {
+		let preferencesDirectory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Preferences/")
+		try Bundle.module.urls(forResourcesWithExtension: "plist", subdirectory: "Preferences")?.forEach { preferenceFile in
+			let existingPreferenceFileURL = preferencesDirectory.appendingPathComponent(preferenceFile.lastPathComponent)
+			try? FileManager.default.removeItem(at: existingPreferenceFileURL)
+			try FileManager.default.copyItem(at: preferenceFile, to: existingPreferenceFileURL)
+			print("Imported preference file: \(preferenceFile.lastPathComponent)")
+		}
+	}
+
+}
+
+enum App: String, CaseIterable {
 
 	case blender
 	case github
@@ -32,38 +69,9 @@ enum Apps: String, CaseIterable {
 				return
 			}
 			NSWorkspace.shared.open(settingsURL)
+			try runAndPrint("osascript", "-e", "tell application \"iStat Menus\" to quit")
 		default:
 			return
-		}
-	}
-
-	static func install() throws {
-		for app in Apps.allCases {
-			install(app)
-			try app.configure()
-		}
-		try copyPreferences()
-	}
-
-	private static func install(_ app: Apps) {
-		guard !FileManager.default.fileExists(atPath: app.url.path) else {
-			print("\(app.url.path) already installed; skipping.")
-			return
-		}
-		do {
-			try Brew.install(app.rawValue, cask: true)
-		} catch {
-			print(error)
-		}
-	}
-
-	private static func copyPreferences() throws {
-		let preferencesDirectory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Preferences/")
-		try Bundle.module.urls(forResourcesWithExtension: "plist", subdirectory: "Preferences")?.forEach { preferenceFile in
-			let existingPreferenceFileURL = preferencesDirectory.appendingPathComponent(preferenceFile.lastPathComponent)
-			try? FileManager.default.removeItem(at: existingPreferenceFileURL)
-			try FileManager.default.copyItem(at: preferenceFile, to: existingPreferenceFileURL)
-			print("Imported preference file: \(preferenceFile.lastPathComponent)")
 		}
 	}
 

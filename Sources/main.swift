@@ -1,15 +1,23 @@
 import ArgumentParser
 
 struct Dotfiles: ParsableCommand {
+	static var configuration = CommandConfiguration(
+		abstract: "Dotfiles: for setting up preferences, utilities, fonts, and apps on a new macOS computer.",
+		subcommands: [Bootstrap.self],
+		defaultSubcommand: Bootstrap.self
+	)
+}
 
-	@Flag
-	var task: [Task] = Task.allCases
+extension Dotfiles {
 
-	mutating func run() throws {
-		print("Setting things up:")
-		for task in task {
-			try task.run()
-		}
+	struct Bootstrap: ParsableCommand {
+
+		static var configuration = CommandConfiguration(
+			abstract: "Bootstrap various preferences, utilities, fonts, and apps.",
+			subcommands: Task.allCases.map { $0.command },
+			defaultSubcommand: Task.everything.command
+		)
+
 	}
 
 }
