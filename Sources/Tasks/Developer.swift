@@ -7,8 +7,9 @@ struct Developer: ParsableCommand {
 		print(Task.developer.description)
 
 		createDeveloperDirectory()
-		try Brew.install("fzf", "antigen", "hub", "coreutils")
 		try installVersionedLanguages()
+		try Brew.install("zinit", "tree", "terminal-notifier", "fzf", "hub", "coreutils")
+		try? Shell.run("terminal-notifier")
 		copyConfiguration()
 	}
 
@@ -16,7 +17,7 @@ struct Developer: ParsableCommand {
 		do {
 			try Shell.run(
 				"mkdir",
-				"\(FileManager.default.homeDirectoryForCurrentUser.path)/\(Constants.developerDirectory)/"
+				Constants.developerURL.path
 			)
 		} catch {
 			print(error.localizedDescription)
@@ -25,18 +26,18 @@ struct Developer: ParsableCommand {
 
 	private func copyConfiguration() {
 		guard let zshrc = Bundle.module.url(forResource: ".zshrc", withExtension: nil) else {
-			 return
+			return
 		}
 		do {
 			try FileManager.default.copyItem(
 				at: zshrc,
-				to: FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(zshrc.lastPathComponent)
+				to: Constants.home.appendingPathComponent(zshrc.lastPathComponent)
 			)
 		} catch {
 			print(error.localizedDescription)
 		}
 		do {
-			try Shell.run("source", "\(FileManager.default.homeDirectoryForCurrentUser.path)/.zshrc")
+			try Shell.run("source", Constants.home.appendingPathComponent(zshrc.lastPathComponent).path)
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -53,6 +54,15 @@ struct Developer: ParsableCommand {
 		}
 		try Shell.run("asdf", "install", "deno", "latest")
 		try Shell.run("asdf", "global", "deno", "latest")
+
+		// Go
+		do {
+			try Shell.run("asdf", "plugin", "add", "golang", "https://github.com/kennyp/asdf-golang.git")
+		} catch {
+			print(error.localizedDescription)
+		}
+		try Shell.run("asdf", "install", "golang", "latest")
+		try Shell.run("asdf", "global", "golang", "latest")
 
 		// Node.js
 		do {
