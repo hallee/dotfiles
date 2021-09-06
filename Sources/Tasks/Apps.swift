@@ -1,6 +1,5 @@
 import AppKit
 import ArgumentParser
-import SwiftShell
 
 struct Apps: ParsableCommand {
 
@@ -69,7 +68,7 @@ enum App: String, CaseIterable {
 				return
 			}
 			NSWorkspace.shared.open(settingsURL)
-			try runAndPrint("osascript", "-e", "tell application \"iStat Menus\" to quit")
+			try Shell.run("osascript -e 'tell application \"iStat Menus\" to quit'")
 		default:
 			return
 		}

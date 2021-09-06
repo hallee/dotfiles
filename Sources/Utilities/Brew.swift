@@ -1,5 +1,3 @@
-import SwiftShell
-
 enum Brew {
 
 	static func install(_ packages: String..., cask: Bool = false) throws {
@@ -11,7 +9,8 @@ enum Brew {
 		if cask {
 			args.insert("--cask", at: 0)
 		}
-		try runAsyncAndPrint("brew", "install", args).finish()
+		args.insert("install", at: 0)
+		try Shell.run("brew", args)
 	}
 
 }
