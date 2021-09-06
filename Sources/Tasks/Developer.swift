@@ -8,8 +8,8 @@ struct Developer: ParsableCommand {
 
 		createDeveloperDirectory()
 		try Brew.install("fzf", "antigen", "hub", "coreutils")
-		copyConfiguration()
 		try installVersionedLanguages()
+		copyConfiguration()
 	}
 
 	private func createDeveloperDirectory() {
@@ -45,6 +45,15 @@ struct Developer: ParsableCommand {
 	private func installVersionedLanguages() throws {
 		try Brew.install("asdf", "gnupg")
 
+		// Deno
+		do {
+			try Shell.run("asdf", "plugin", "add", "deno", "https://github.com/asdf-community/asdf-deno.git")
+		} catch {
+			print(error.localizedDescription)
+		}
+		try Shell.run("asdf", "install", "deno", "latest")
+		try Shell.run("asdf", "global", "deno", "latest")
+
 		// Node.js
 		do {
 			try Shell.run("asdf", "plugin", "add", "nodejs", "https://github.com/asdf-vm/asdf-nodejs.git")
@@ -53,6 +62,15 @@ struct Developer: ParsableCommand {
 		}
 		try Shell.run("asdf", "install", "nodejs", "latest")
 		try Shell.run("asdf", "global", "nodejs", "latest")
+
+		// Python
+		do {
+			try Shell.run("asdf", "plugin", "add", "python")
+		} catch {
+			print(error.localizedDescription)
+		}
+		try Shell.run("asdf", "install", "python", "latest")
+		try Shell.run("asdf", "global", "python", "latest")
 
 		// Ruby
 		do {
