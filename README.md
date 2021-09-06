@@ -10,7 +10,7 @@ This is a Swift CLI program; see [`Package.swift`](Package.swift).
 2. Install this CLI:
 ```sh
 brew tap hallee/tap
-brew install hallee/tap/dotfiles
+brew install dotfiles
 dotfiles bootstrap # initial setup
 ```
 
