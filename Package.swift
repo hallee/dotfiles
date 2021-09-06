@@ -13,7 +13,8 @@ let package = Package(
 		.package(url: "https://github.com/apple/swift-argument-parser", from: "0.5.0")
 	],
 	targets: [
-		.target(name: "Dotfiles",
+		.target(
+			name: "Dotfiles",
 			dependencies: [
 				.product(name: "ArgumentParser", package: "swift-argument-parser")
 			],

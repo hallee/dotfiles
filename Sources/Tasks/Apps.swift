@@ -26,9 +26,8 @@ struct Apps: ParsableCommand {
 	}
 
 	private func copyPreferences() throws {
-		let preferencesDirectory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Preferences/")
 		try Bundle.module.urls(forResourcesWithExtension: "plist", subdirectory: "Preferences")?.forEach { preferenceFile in
-			let existingPreferenceFileURL = preferencesDirectory.appendingPathComponent(preferenceFile.lastPathComponent)
+			let existingPreferenceFileURL = Constants.userPreferences.appendingPathComponent(preferenceFile.lastPathComponent)
 			try? FileManager.default.removeItem(at: existingPreferenceFileURL)
 			try FileManager.default.copyItem(at: preferenceFile, to: existingPreferenceFileURL)
 			print("Imported preference file: \(preferenceFile.lastPathComponent)")
