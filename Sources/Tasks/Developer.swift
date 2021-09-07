@@ -3,11 +3,16 @@ import Foundation
 
 struct Developer: ParsableCommand {
 
+	static var configuration = CommandConfiguration(
+		abstract: "Setup for developer and terminal tools.",
+		subcommands: [Languages.self],
+		defaultSubcommand: nil
+	)
+
 	func run() throws {
 		print(Task.developer.description)
 
 		createDeveloperDirectory()
-		try installVersionedLanguages()
 		try Brew.install("zinit", "tree", "terminal-notifier", "fzf", "hub", "coreutils")
 		try? Shell.run("terminal-notifier")
 		copyConfiguration()
@@ -43,62 +48,52 @@ struct Developer: ParsableCommand {
 		}
 	}
 
-	private func installVersionedLanguages() throws {
-		try Brew.install("asdf", "gnupg")
+}
 
-		// Deno
-		do {
-			try Shell.run("asdf", "plugin", "add", "deno", "https://github.com/asdf-community/asdf-deno.git")
-		} catch {
-			print(error.localizedDescription)
-		}
-		try Shell.run("asdf", "install", "deno", "latest")
-		try Shell.run("asdf", "global", "deno", "latest")
+extension Developer {
 
-		// Go
-		do {
-			try Shell.run("asdf", "plugin", "add", "golang", "https://github.com/kennyp/asdf-golang.git")
-		} catch {
-			print(error.localizedDescription)
-		}
-		try Shell.run("asdf", "install", "golang", "latest")
-		try Shell.run("asdf", "global", "golang", "latest")
+	enum Language: String, CaseIterable, EnumerableFlag {
+		case deno
+		case golang
+		case nodejs
+		case python
+		case ruby
+		case rust
 
-		// Node.js
-		do {
-			try Shell.run("asdf", "plugin", "add", "nodejs", "https://github.com/asdf-vm/asdf-nodejs.git")
-		} catch {
-			print(error.localizedDescription)
+		var plugin: String {
+			switch self {
+			case .deno: return "https://github.com/asdf-community/asdf-deno.git"
+			case .golang: return "https://github.com/kennyp/asdf-golang.git"
+			case .nodejs: return "https://github.com/asdf-vm/asdf-nodejs.git"
+			case .python: return "https://github.com/danhper/asdf-python.git"
+			case .ruby: return "https://github.com/asdf-vm/asdf-ruby.git"
+			case .rust: return "https://github.com/asdf-community/asdf-rust.git"
+			}
 		}
-		try Shell.run("asdf", "install", "nodejs", "latest")
-		try Shell.run("asdf", "global", "nodejs", "latest")
+	}
 
-		// Python
-		do {
-			try Shell.run("asdf", "plugin", "add", "python")
-		} catch {
-			print(error.localizedDescription)
-		}
-		try Shell.run("asdf", "install", "python", "latest")
-		try Shell.run("asdf", "global", "python", "latest")
+	struct Languages: ParsableCommand {
 
-		// Ruby
-		do {
-			try Shell.run("asdf", "plugin", "add", "ruby", "https://github.com/asdf-vm/asdf-ruby.git")
-		} catch {
-			print(error.localizedDescription)
-		}
-		try Shell.run("asdf", "install", "ruby", "latest")
-		try Shell.run("asdf", "global", "ruby", "latest")
+		@Flag var languages: [Language] = Language.allCases
 
-		// Rust
-		do {
-			try Shell.run("asdf", "plugin", "add", "rust", "https://github.com/asdf-community/asdf-rust.git")
-		} catch {
-			print(error.localizedDescription)
+		func run() throws {
+				try Brew.install("asdf", "gnupg")
+
+			for language in languages {
+				try install(language: language)
+			}
 		}
-		try Shell.run("asdf", "install", "rust", "latest")
-		try Shell.run("asdf", "global", "rust", "latest")
+
+		private func install(language: Language) throws {
+			do {
+				try Shell.run("asdf", "plugin", "add", language.rawValue, "https://github.com/asdf-community/asdf-deno.git")
+			} catch {
+				print(error.localizedDescription)
+			}
+			try Shell.run("asdf", "install", language.rawValue, "latest")
+			try Shell.run("asdf", "global", language.rawValue, "latest")
+		}
+
 	}
 
 }

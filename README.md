@@ -14,6 +14,15 @@ brew install dotfiles
 dotfiles bootstrap # initial setup
 ```
 
+### Version managed development languages
+
+I use [`asdf`](http://asdf-vm.com) for installing languages and environments. Because setup can take a long time, this command is separate from `dotfiles bootstrap everything`:
+
+```sh
+dotfiles bootstrap developer languages # install all lanuages
+dotfiles bootstrap developer languages --deno --nodejs # flags to install only specific languages
+```
+
 ## Development
 
 ### Building `dotfiles` from source
