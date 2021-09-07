@@ -38,6 +38,7 @@ struct Apps: ParsableCommand {
 
 enum App: String, CaseIterable {
 
+	case batteryBuddy = "battery-buddy"
 	case blender
 	case github
 	case iStat = "istat-menus"
@@ -45,10 +46,12 @@ enum App: String, CaseIterable {
 	case nova
 	case paw
 	case raycast
+	case wwdc
 
 	var url: URL {
 		var applicationURL = URL(fileURLWithPath: "/Applications/")
 		switch self {
+		case .batteryBuddy: applicationURL.appendPathComponent("Battery Buddy")
 		case .blender: applicationURL.appendPathComponent("Blender")
 		case .github: applicationURL.appendPathComponent("GitHub Desktop")
 		case .iStat: applicationURL.appendPathComponent("iStat Menus")
@@ -56,6 +59,7 @@ enum App: String, CaseIterable {
 		case .nova: applicationURL.appendPathComponent("Nova")
 		case .paw: applicationURL.appendPathComponent("Paw")
 		case .raycast: applicationURL.appendPathComponent("Raycast")
+		case .wwdc: applicationURL.appendPathComponent("WWDC")
 		}
 		return applicationURL.appendingPathExtension("app")
 	}
@@ -67,7 +71,14 @@ enum App: String, CaseIterable {
 				return
 			}
 			NSWorkspace.shared.open(settingsURL)
-			try Shell.run("osascript -e 'tell application \"iStat Menus\" to quit'")
+			DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+				try? Shell.run("osascript -e 'tell application \"iStat Menus\" to quit'")
+			}
+		case .raycast:
+			guard let settingsURL = Bundle.module.url(forResource: "Raycast", withExtension: "rayconfig") else {
+				return
+			}
+			NSWorkspace.shared.open(settingsURL)
 		default:
 			return
 		}
