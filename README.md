@@ -21,7 +21,7 @@ dotfiles bootstrap # initial setup
 ```sh
 git clone git@github.com:hallee/dotfiles.git
 cd dotfiles
-swift build -c release
-cp .build/release/dotfiles .
+swift build -c release --arch arm64 --arch x86_64
+cp .build/apple/Products/Release/dotfiles .
 ./dotfiles
 ```
