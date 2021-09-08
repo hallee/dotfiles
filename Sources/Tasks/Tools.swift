@@ -3,6 +3,10 @@ import Foundation
 
 struct Tools: ParsableCommand {
 
+	static var configuration = CommandConfiguration(
+		abstract: "Set up Raycast and install other terminal tools."
+	)
+
 	func run() throws {
 		print(Task.tools.description)
 

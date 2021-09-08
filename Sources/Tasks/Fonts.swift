@@ -3,6 +3,10 @@ import ArgumentParser
 
 struct Fonts: ParsableCommand {
 
+	static var configuration = CommandConfiguration(
+		abstract: "Install custom user fonts."
+	)
+
 	static let fontURL = Constants.developerURL.appendingPathComponent("fonts", isDirectory: true)
 
 	static let installURL = Constants.userLibrary.appendingPathComponent("Fonts", isDirectory: true)

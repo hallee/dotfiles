@@ -2,6 +2,10 @@ import ArgumentParser
 
 struct Git: ParsableCommand {
 
+	static var configuration = CommandConfiguration(
+		abstract: "Install Homebrew git and configure global settings."
+	)
+
 	func run() throws {
 		print(Task.git.description)
 
