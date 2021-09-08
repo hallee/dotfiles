@@ -1,6 +1,9 @@
 import ArgumentParser
 
+@main
 struct Dotfiles: ParsableCommand {
+
+	static let interruptMonitor = Shell.monitorInterrupt()
 
 	static var configuration = CommandConfiguration(
 		abstract: "Dotfiles: for setting up preferences, utilities, fonts, and apps on a new macOS computer.",
@@ -23,7 +26,3 @@ extension Dotfiles {
 	}
 
 }
-
-let interruptMonitor = Shell.monitorInterrupt()
-
-Dotfiles.main()

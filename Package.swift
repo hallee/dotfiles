@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.4
 import PackageDescription
 
 let package = Package(
@@ -13,14 +13,14 @@ let package = Package(
 		.package(url: "https://github.com/apple/swift-argument-parser", from: "0.5.0")
 	],
 	targets: [
-		.target(
+		.executableTarget(
 			name: "Dotfiles",
 			dependencies: [
 				.product(name: "ArgumentParser", package: "swift-argument-parser")
 			],
 			path: "Sources",
 			resources: [
-				.copy("Resources/")
+				.process("Resources/")
 			]
 		)
 	]
