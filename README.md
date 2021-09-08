@@ -14,12 +14,20 @@ brew install dotfiles
 dotfiles bootstrap # initial setup
 ```
 
+### Apps
+
+By default, `dotfiles` installs a number of apps I use frequently via Homebrew Cask. Specific apps can be selected instead using flags, like:
+
+```sh
+dotfiles bootstrap apps --battery-buddy --raycast
+```
+
 ### Version managed development languages
 
 I use [`asdf`](http://asdf-vm.com) for installing languages and environments. Because setup can take a long time, this command is separate from `dotfiles bootstrap everything`:
 
 ```sh
-dotfiles bootstrap developer languages # install all lanuages
+dotfiles bootstrap developer languages # install all languages
 dotfiles bootstrap developer languages --deno --nodejs # flags to install only specific languages
 ```
 
@@ -30,7 +38,8 @@ dotfiles bootstrap developer languages --deno --nodejs # flags to install only s
 ```sh
 git clone git@github.com:hallee/dotfiles.git
 cd dotfiles
-swift build -c release --arch arm64 --arch x86_64
-cp .build/apple/Products/Release/dotfiles .
+swift build -c release
+swift build -c release --arch x86_64
+lipo .build/x86_64-apple-macosx/release/dotfiles .build/arm64-apple-macosx/release/dotfiles -create -output dotfiles
 ./dotfiles
 ```

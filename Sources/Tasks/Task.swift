@@ -39,11 +39,10 @@ struct Everything: ParsableCommand {
 	mutating func run() throws {
 		print(Task.everything.description)
 
-		try Task.allCases
+		Task.allCases
 			.filter { $0 != .everything }
 			.forEach { task in
-				var command = task.command.init()
-				try command.run()
+				task.command.main()
 			}
 	}
 

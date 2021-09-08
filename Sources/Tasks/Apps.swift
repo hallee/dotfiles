@@ -3,10 +3,16 @@ import ArgumentParser
 
 struct Apps: ParsableCommand {
 
+	static var configuration = CommandConfiguration(
+		abstract: "Install apps using Homebrew Cask, and copy important app preferences."
+	)
+
+	@Flag var apps: [App] = App.allCases
+
 	func run() throws {
 		print(Task.apps.description)
 
-		for app in App.allCases {
+		for app in apps {
 			install(app)
 			try app.configure()
 		}
@@ -36,7 +42,7 @@ struct Apps: ParsableCommand {
 
 }
 
-enum App: String, CaseIterable {
+enum App: String, CaseIterable, EnumerableFlag {
 
 	case batteryBuddy = "battery-buddy"
 	case blender
