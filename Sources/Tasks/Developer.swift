@@ -4,17 +4,21 @@ import Foundation
 struct Developer: ParsableCommand {
 
 	static var configuration = CommandConfiguration(
-		abstract: "Setup for developer and terminal tools.",
-		subcommands: [Languages.self],
-		defaultSubcommand: nil
+		abstract: "Set up developer and terminal tools.",
+		subcommands: [Languages.self]
 	)
 
 	func run() throws {
 		print(Task.developer.description)
 
 		createDeveloperDirectory()
+
+		copyXcodeColorScheme()
+
 		try Brew.install("zinit", "tree", "terminal-notifier", "fzf", "hub", "coreutils")
+
 		try? Shell.run("terminal-notifier")
+
 		copyConfiguration()
 	}
 
@@ -24,6 +28,20 @@ struct Developer: ParsableCommand {
 				"mkdir",
 				Constants.developerURL.path
 			)
+		} catch {
+			print(error.localizedDescription)
+		}
+	}
+
+	private func copyXcodeColorScheme() {
+		let colorSchemeDestinationURL = Constants.userLibrary
+			.appendingPathComponent("/Developer/Xcode/UserData/FontAndColorThemes", isDirectory: true)
+		guard let colorSchemeURL = Bundle.module.url(forResource: "One Dark", withExtension: "xccolortheme") else {
+			return
+		}
+
+		do {
+			try FileManager.default.copyItem(at: colorSchemeURL, to: colorSchemeDestinationURL)
 		} catch {
 			print(error.localizedDescription)
 		}
