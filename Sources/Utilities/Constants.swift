@@ -4,7 +4,24 @@ enum Constants {
 
 	static let defaultGitBranchName = "main"
 	static let developerDirectory = "Developer"
-	static let editorCommand = "nova -w" // vi
+	static let editorCommand = "nova"
+	static let excludesFile = home.appendingPathComponent(".gitignore")
+	static let gitIgnore = """
+		# macOS
+
+		.DS_Store
+		.Spotlight-V100
+		.Trashes
+
+		# Linux
+
+		.Trash-*
+		.nfs*
+
+		# Windows
+
+		Thumbs.db
+		"""
 	static let email = "hal@lee.me"
 	static let name = "Hal Lee"
 

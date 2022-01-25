@@ -1,4 +1,5 @@
 import ArgumentParser
+import Foundation
 
 struct Git: ParsableCommand {
 
@@ -13,7 +14,10 @@ struct Git: ParsableCommand {
 		try Shell.run("git", "config", "--global", "user.email", Constants.email)
 		try Shell.run("git", "config", "--global", "user.name", Constants.name)
 		try Shell.run("git", "config", "--global", "core.editor", Constants.editorCommand)
+		try Shell.run("git", "config", "--global", "core.excludesfile", Constants.excludesFile.path)
 		try Shell.run("git", "config", "--global", "init.defaultBranch", Constants.defaultGitBranchName)
+		try Shell.run("git", "config", "--global", "url.\"git@github.com:\".insteadOf", "https://github.com/")
+		FileManager.default.createFile(atPath: Constants.excludesFile.path, contents: Constants.gitIgnore.data(using: .utf8))
 	}
 
 }

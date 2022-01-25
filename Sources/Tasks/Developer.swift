@@ -104,7 +104,7 @@ extension Developer {
 
 		private func install(language: Language) throws {
 			do {
-				try Shell.run("asdf", "plugin", "add", language.rawValue, "https://github.com/asdf-community/asdf-deno.git")
+				try Shell.run("asdf", "plugin", "add", language.rawValue, language.plugin)
 			} catch {
 				print(error.localizedDescription)
 			}

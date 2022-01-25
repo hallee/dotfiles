@@ -26,7 +26,7 @@
 		<key>CPU_MenubarGraphOverall</key>
 		<string>1.00 1.00 1.00 1.00</string>
 		<key>CPU_MenubarGraphWidth</key>
-		<real>63.922569274902344</real>
+		<real>44</real>
 		<key>CPU_MenubarGroupItems</key>
 		<integer>1</integer>
 		<key>CPU_MenubarMode</key>
@@ -35,13 +35,15 @@
 				<key>key</key>
 				<string>0</string>
 				<key>uuid</key>
-				<string>D0A36D67-E586-4648-A16F-917E5CC03837</string>
+				<string>4208CC40-D503-4409-8E94-DE3B7503E86D</string>
 			</dict>
 			<dict>
+				<key>display</key>
+				<integer>1</integer>
 				<key>key</key>
 				<string>11</string>
 				<key>uuid</key>
-				<string>160094CC-CF87-4A55-BC5A-07BB874010E5</string>
+				<string>D20CC141-8E41-41A0-9B13-03D7709C4980</string>
 			</dict>
 		</array>
 		<key>CPU_MenubarSingleHistoryGraph</key>
@@ -54,31 +56,31 @@
 				<key>key</key>
 				<string>1</string>
 				<key>uuid</key>
-				<string>61735AB7-EE49-4B94-AD60-4CF6E6AEB9DB</string>
-			</dict>
-			<dict>
-				<key>key</key>
-				<string>4</string>
-				<key>uuid</key>
-				<string>2F23F356-3EAC-43C5-A185-8ED7D53DA3B7</string>
+				<string>F06962F2-D6F7-4BE5-B967-0043A888D367</string>
 			</dict>
 			<dict>
 				<key>key</key>
 				<string>2</string>
 				<key>uuid</key>
-				<string>83631D0E-A51F-4F05-8C57-AAAA7BBF1B87</string>
+				<string>F0AAE5DD-AF8F-4C1E-9873-CC831B6AE74E</string>
 			</dict>
 			<dict>
 				<key>key</key>
 				<string>3</string>
 				<key>uuid</key>
-				<string>8E4CC88D-FC40-41B1-8A53-6DA934DBDA00</string>
+				<string>580B5FDD-637E-4BDD-BC07-2BF017811A52</string>
+			</dict>
+			<dict>
+				<key>key</key>
+				<string>4</string>
+				<key>uuid</key>
+				<string>CF54BA69-D7B5-4DF0-B025-4BC31974D448</string>
 			</dict>
 			<dict>
 				<key>key</key>
 				<string>5</string>
 				<key>uuid</key>
-				<string>F2925488-E5D9-439B-B554-1203FA7324BE</string>
+				<string>17CC5674-CB42-4BD7-A4BB-4CBEA30497EF</string>
 			</dict>
 		</array>
 		<key>CombinedMenubarDisplayMode</key>
@@ -110,7 +112,9 @@
 				<key>boot</key>
 				<true/>
 				<key>key</key>
-				<string>3882ADF5-239C-3387-AB22-70FE849A785E</string>
+				<string>35956696-AB80-4C68-A0CB-73F9CC862394</string>
+				<key>name</key>
+				<string>WD SN850 - Data</string>
 			</dict>
 		</array>
 		<key>DropdownTheme</key>
@@ -123,7 +127,7 @@
 		<array>
 			<dict>
 				<key>model</key>
-				<string>MacBookAir10,1</string>
+				<string>MacPro7,1</string>
 				<key>name</key>
 				<string>Medium</string>
 				<key>speeds</key>
@@ -133,7 +137,7 @@
 			</dict>
 			<dict>
 				<key>model</key>
-				<string>MacBookAir10,1</string>
+				<string>MacPro7,1</string>
 				<key>name</key>
 				<string>High</string>
 				<key>speeds</key>
@@ -147,7 +151,7 @@
 		<key>GPU_MenubarGraphProcessor</key>
 		<string>1.00 1.00 1.00 1.00</string>
 		<key>GPU_MenubarGraphWidth</key>
-		<real>39.932903289794922</real>
+		<real>44</real>
 		<key>Menubar-DetectedColor</key>
 		<string>1.00 1.00 1.00 0.90</string>
 		<key>MenubarGraphSize</key>
@@ -242,6 +246,8 @@
 		</array>
 		<key>Sensors-Limits-Updated</key>
 		<true/>
+		<key>Sensors_DropdownOrderDisabled</key>
+		<string></string>
 		<key>Sensors_MenubarMode</key>
 		<array>
 			<dict>
