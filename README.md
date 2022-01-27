@@ -4,6 +4,9 @@ My `dotfiles`. For setting up preferences, utilities, fonts, and apps on a new m
 
 This is a Swift CLI program; see [`Package.swift`](Package.swift).
 
+![51438](https://user-images.githubusercontent.com/739304/151281254-ec7eea48-a3f3-4ae8-a91b-025d8efbbba3.gif)
+
+
 ## Setup
 
 1. [Install Homebrew](https://brew.sh)
