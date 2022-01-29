@@ -39,9 +39,5 @@ dotfiles bootstrap developer languages --deno --nodejs # flags to install only s
 ### Building `dotfiles` from source
 
 ```sh
-git clone git@github.com:hallee/dotfiles.git
-cd dotfiles
-swift build -c release --arch x86_64 --arch arm64
-cp .build/apple/Products/Release/dotfiles Release
-cp -r .build/apple/Products/Release/dotfiles_Dotfiles.bundle Release
+make
 ```

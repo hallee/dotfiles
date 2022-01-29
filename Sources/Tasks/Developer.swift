@@ -24,10 +24,7 @@ struct Developer: ParsableCommand {
 
 	private func createDeveloperDirectory() {
 		do {
-			try Shell.run(
-				"mkdir",
-				Constants.developerURL.path
-			)
+			try FileManager.default.createDirectory(at: Constants.developerURL, withIntermediateDirectories: true)
 		} catch {
 			print(error.localizedDescription)
 		}
@@ -41,7 +38,8 @@ struct Developer: ParsableCommand {
 		}
 
 		do {
-			try FileManager.default.copyItem(at: colorSchemeURL, to: colorSchemeDestinationURL)
+			try? FileManager.default.createDirectory(at: colorSchemeDestinationURL, withIntermediateDirectories: true)
+			try FileManager.default.copyItem(at: colorSchemeURL, to: colorSchemeDestinationURL.appendingPathComponent(colorSchemeURL.lastPathComponent))
 		} catch {
 			print(error.localizedDescription)
 		}
