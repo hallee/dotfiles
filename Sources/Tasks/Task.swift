@@ -45,7 +45,7 @@ struct Everything: ParsableCommand {
 		Task.allCases
 			.filter { $0 != .everything }
 			.forEach { task in
-				task.command.main()
+				task.command.main([])
 			}
 	}
 

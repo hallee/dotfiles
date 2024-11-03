@@ -27,7 +27,7 @@ dotfiles bootstrap apps --battery-buddy --raycast
 
 ### Version managed development languages
 
-I use [`asdf`](http://asdf-vm.com) for installing languages and environments. Because setup can take a long time, this command is separate from `dotfiles bootstrap everything`:
+I use [`mise`](https://mise.jdx.dev) for installing languages and environments. Because setup can take a long time, this command is separate from `dotfiles bootstrap everything`:
 
 ```sh
 dotfiles bootstrap developer languages # install all languages

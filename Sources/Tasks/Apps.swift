@@ -44,28 +44,20 @@ struct Apps: ParsableCommand {
 
 enum App: String, CaseIterable, EnumerableFlag {
 
-	case batteryBuddy = "battery-buddy"
-	case blender
 	case github
 	case iStat = "istat-menus"
 	case iterm2
 	case nova
-	case paw
 	case raycast
-	case wwdc
 
 	var url: URL {
 		var applicationURL = URL(fileURLWithPath: "/Applications/")
 		switch self {
-		case .batteryBuddy: applicationURL.appendPathComponent("Battery Buddy")
-		case .blender: applicationURL.appendPathComponent("Blender")
 		case .github: applicationURL.appendPathComponent("GitHub Desktop")
 		case .iStat: applicationURL.appendPathComponent("iStat Menus")
 		case .iterm2: applicationURL.appendPathComponent("iTerm")
 		case .nova: applicationURL.appendPathComponent("Nova")
-		case .paw: applicationURL.appendPathComponent("Paw")
 		case .raycast: applicationURL.appendPathComponent("Raycast")
-		case .wwdc: applicationURL.appendPathComponent("WWDC")
 		}
 		return applicationURL.appendingPathExtension("app")
 	}
@@ -73,7 +65,7 @@ enum App: String, CaseIterable, EnumerableFlag {
 	func configure() throws {
 		switch self {
 		case .iStat:
-			guard let settingsURL = Bundle.module.url(forResource: "iStat Menus Settings", withExtension: "ismp") else {
+			guard let settingsURL = Bundle.module.url(forResource: "iStat Menus Settings", withExtension: "ismp7") else {
 				return
 			}
 			NSWorkspace.shared.open(settingsURL)

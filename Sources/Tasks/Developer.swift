@@ -70,20 +70,13 @@ extension Developer {
 
 	enum Language: String, CaseIterable, EnumerableFlag {
 		case deno
-		case golang
-		case nodejs
+		case node
 		case python
-		case ruby
-		case rust
 
-		var plugin: String {
+		var version: String {
 			switch self {
-			case .deno: return "https://github.com/asdf-community/asdf-deno.git"
-			case .golang: return "https://github.com/kennyp/asdf-golang.git"
-			case .nodejs: return "https://github.com/asdf-vm/asdf-nodejs.git"
-			case .python: return "https://github.com/danhper/asdf-python.git"
-			case .ruby: return "https://github.com/asdf-vm/asdf-ruby.git"
-			case .rust: return "https://github.com/asdf-community/asdf-rust.git"
+			case .node: return "lts"
+			default: return "latest"
 			}
 		}
 	}
@@ -93,7 +86,7 @@ extension Developer {
 		@Flag var languages: [Language] = Language.allCases
 
 		func run() throws {
-				try Brew.install("asdf", "gnupg")
+			try Brew.install("mise")
 
 			for language in languages {
 				try install(language: language)
@@ -102,12 +95,10 @@ extension Developer {
 
 		private func install(language: Language) throws {
 			do {
-				try Shell.run("asdf", "plugin", "add", language.rawValue, language.plugin)
+				try Shell.run("mise", "use", "\(language.rawValue)@\(language.version)", "--global")
 			} catch {
 				print(error.localizedDescription)
 			}
-			try Shell.run("asdf", "install", language.rawValue, "latest")
-			try Shell.run("asdf", "global", language.rawValue, "latest")
 		}
 
 	}

@@ -17,7 +17,7 @@ struct Git: ParsableCommand {
 		try Shell.run("git", "config", "--global", "core.excludesfile", Constants.excludesFile.path)
 		try Shell.run("git", "config", "--global", "init.defaultBranch", Constants.defaultGitBranchName)
 		try Shell.run("git", "config", "--global", "url.\"git@github.com:\".insteadOf", "https://github.com/")
-		FileManager.default.createFile(atPath: Constants.excludesFile.path, contents: Constants.gitIgnore.data(using: .utf8))
+		FileManager.default.createFile(atPath: Constants.excludesFile.path, contents: Data(Constants.gitIgnore.utf8))
 	}
 
 }
