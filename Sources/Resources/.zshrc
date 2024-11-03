@@ -10,8 +10,8 @@ HISTFILE=~/.zsh_history
 # ==== Hub ====
 eval "$(hub alias -s)"
 
-# ==== asdf ====
-. $(brew --prefix asdf)/asdf.sh
+# ==== Mise ====
+eval "$(mise activate zsh)"
 
 # ==== zinit ====
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -30,4 +30,3 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs command_execution_time status background_jobs_joined)
 POWERLEVEL9K_STATUS_ERROR_BACKGROUND='black'
 POWERLEVEL9K_STATUS_CROSS=true
-### End of Zinit's installer chunk

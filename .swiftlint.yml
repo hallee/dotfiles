@@ -38,5 +38,7 @@ line_length:
   ignores_comments: true
   ignores_interpolated_strings: true
 excluded:
+  - .build
+  - .swiftpm
   - Sources/Tests
 indentation: tabs
