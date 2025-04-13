@@ -49,12 +49,11 @@ struct Developer: ParsableCommand {
 			print("zprofile not found")
 			return
 		}
+		let zprofileURL = Constants.home.appendingPathComponent(".zprofile")
 		do {
-			try? FileManager.default.removeItem(at: Constants.home.appendingPathComponent(".zprofile"))
-			try FileManager.default.copyItem(
-				at: zprofile,
-				to: Constants.home.appendingPathComponent(".zprofile")
-			)
+			try? FileManager.default.removeItem(at: zprofileURL)
+			try FileManager.default.copyItem(at: zprofile, to: zprofileURL)
+			try Shell.run("chmod", "644", "~/.zprofile")
 		} catch {
 			print(error.localizedDescription)
 		}
