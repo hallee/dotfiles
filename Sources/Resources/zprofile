@@ -8,8 +8,7 @@ export TERM="xterm-256color"
 eval "$(mise activate zsh)"
 
 # ==== zinit ====
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-source "${ZINIT_HOME}/zinit.zsh"
+source /opt/homebrew/opt/zinit/zinit.zsh
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-autosuggestions # suggestions and tab-completion for commands
