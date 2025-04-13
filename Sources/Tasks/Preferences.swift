@@ -30,6 +30,7 @@ struct Preferences: ParsableCommand {
 	private func setFinderPrefereces() throws {
 		try Shell.run("defaults write com.apple.finder _FXSortFoldersFirst -bool True")
 		try Shell.run("defaults write com.apple.finder ShowHardDrivesOnDesktop -bool False")
+		try Shell.run("defaults write com.apple.finder ShowPathbar -bool True")
 		try Shell.run("""
 		defaults write com.apple.finder StandardViewSettings -dict-add IconViewSettings '<dict><key>arrangeBy</key><string>name</string><key>backgroundColorBlue</key><real>1.0</real><key>backgroundColorGreen</key><real>1.0</real><key>backgroundColorRed</key><real>1.0</real><key>backgroundType</key><integer>0</integer><key>gridOffsetX</key><real>0.0</real><key>gridOffsetY</key><real>0.0</real><key>gridSpacing</key><real>57.0</real><key>iconSize</key><real>64.0</real><key>labelOnBottom</key><true /><key>showIconPreview</key><true /><key>showItemInfo</key><false /><key>textSize</key><real>12.0</real><key>viewOptionsVersion</key><integer>1</integer></dict>'
 		""")
