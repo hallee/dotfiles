@@ -45,19 +45,21 @@ struct Developer: ParsableCommand {
 	}
 
 	private func copyConfiguration() {
-		guard let zprofile = Bundle.module.url(forResource: ".zprofile", withExtension: nil) else {
+		guard let zprofile = Bundle.module.url(forResource: "zprofile", withExtension: nil) else {
+			print("zprofile not found")
 			return
 		}
 		do {
+			try? FileManager.default.removeItem(at: Constants.home.appendingPathComponent(".zprofile"))
 			try FileManager.default.copyItem(
 				at: zprofile,
-				to: Constants.home.appendingPathComponent(zprofile.lastPathComponent)
+				to: Constants.home.appendingPathComponent(".zprofile")
 			)
 		} catch {
 			print(error.localizedDescription)
 		}
 		do {
-			try Shell.run("source", Constants.home.appendingPathComponent(zprofile.lastPathComponent).path)
+			try Shell.run("source", Constants.home.appendingPathComponent(".zprofile").path)
 		} catch {
 			print(error.localizedDescription)
 		}
