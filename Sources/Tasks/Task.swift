@@ -9,7 +9,6 @@ enum Task: String, CaseIterable, EnumerableFlag {
 	case fonts
 	case git
 	case preferences
-	case tools
 
 	var description: String {
 		switch self {
@@ -19,7 +18,6 @@ enum Task: String, CaseIterable, EnumerableFlag {
 		case .fonts: return "Installing fonts..."
 		case .git: return "Setting up Git..."
 		case .preferences: return "Setting preferences..."
-		case .tools: return "Setting up tools..."
 		}
 	}
 
@@ -31,7 +29,6 @@ enum Task: String, CaseIterable, EnumerableFlag {
 		case .fonts: return Fonts.self
 		case .git: return Git.self
 		case .preferences: return Preferences.self
-		case .tools: return Tools.self
 		}
 	}
 

@@ -31,7 +31,7 @@ I use [`mise`](https://mise.jdx.dev) for installing languages and environments. 
 
 ```sh
 dotfiles bootstrap developer languages # install all languages
-dotfiles bootstrap developer languages --deno --nodejs # flags to install only specific languages
+dotfiles bootstrap developer languages --nodejs # flags to install only specific languages
 ```
 
 ## Development

@@ -4,8 +4,7 @@ import Foundation
 struct Developer: ParsableCommand {
 
 	static var configuration = CommandConfiguration(
-		abstract: "Set up developer and terminal tools.",
-		subcommands: [Languages.self]
+		abstract: "Set up developer and terminal tools."
 	)
 
 	func run() throws {
@@ -15,11 +14,11 @@ struct Developer: ParsableCommand {
 
 		copyXcodeColorScheme()
 
-		try Brew.install("zinit", "tree", "terminal-notifier", "fzf", "hub", "coreutils")
-
-		try? Shell.run("terminal-notifier")
+		try Brew.install("coreutils", "zinit", "tree", "fzf", "swiftlint", "shellcheck")
 
 		copyConfiguration()
+
+		try installLanguages()
 	}
 
 	private func createDeveloperDirectory() {
@@ -46,30 +45,34 @@ struct Developer: ParsableCommand {
 	}
 
 	private func copyConfiguration() {
-		guard let zshrc = Bundle.module.url(forResource: ".zshrc", withExtension: nil) else {
+		guard let zprofile = Bundle.module.url(forResource: ".zprofile", withExtension: nil) else {
 			return
 		}
 		do {
 			try FileManager.default.copyItem(
-				at: zshrc,
-				to: Constants.home.appendingPathComponent(zshrc.lastPathComponent)
+				at: zprofile,
+				to: Constants.home.appendingPathComponent(zprofile.lastPathComponent)
 			)
 		} catch {
 			print(error.localizedDescription)
 		}
 		do {
-			try Shell.run("source", Constants.home.appendingPathComponent(zshrc.lastPathComponent).path)
+			try Shell.run("source", Constants.home.appendingPathComponent(zprofile.lastPathComponent).path)
 		} catch {
 			print(error.localizedDescription)
 		}
 	}
 
-}
+	private func installLanguages() throws {
+		try Brew.install("mise")
 
-extension Developer {
+		for language in Language.allCases {
+			try install(language: language)
+		}
+	}
 
 	enum Language: String, CaseIterable, EnumerableFlag {
-		case deno
+		case go
 		case node
 		case python
 
@@ -81,26 +84,11 @@ extension Developer {
 		}
 	}
 
-	struct Languages: ParsableCommand {
-
-		@Flag var languages: [Language] = Language.allCases
-
-		func run() throws {
-			try Brew.install("mise")
-
-			for language in languages {
-				try install(language: language)
-			}
+	private func install(language: Language) throws {
+		do {
+			try Shell.run("mise", "use", "\(language.rawValue)@\(language.version)", "--global")
+		} catch {
+			print(error.localizedDescription)
 		}
-
-		private func install(language: Language) throws {
-			do {
-				try Shell.run("mise", "use", "\(language.rawValue)@\(language.version)", "--global")
-			} catch {
-				print(error.localizedDescription)
-			}
-		}
-
 	}
-
 }
